@@ -1,37 +1,37 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { APITester } from "./APITester";
-import "./index.css";
+import { Button as RPButton } from "@redpanda-data/ui";
+import { Button as NewButton } from "proposed-ui";
+import { Button } from "ui-registry";
 
-import logo from "./logo.svg";
-import reactLogo from "./react.svg";
-
-export function App() {
+function App() {
   return (
-    <div className="container mx-auto p-8 text-center relative z-10">
-      <div className="flex justify-center items-center gap-8 mb-8">
-        <img
-          src={logo}
-          alt="Bun Logo"
-          className="h-36 p-6 transition-all duration-300 hover:drop-shadow-[0_0_2em_#646cffaa] scale-120"
-        />
-        <img
-          src={reactLogo}
-          alt="React Logo"
-          className="h-36 p-6 transition-all duration-300 hover:drop-shadow-[0_0_2em_#61dafbaa] [animation:spin_20s_linear_infinite]"
-        />
-      </div>
+    <div className="min-h-screen bg-gray-100 p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          UI Libraries Demo
+        </h1>
+        <div className="grid grid-cols-3 gap-4">
+          <section className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-4">Redpanda UI</h2>
+            <div className="flex flex-col gap-4">
+              <RPButton>Click me</RPButton>
+            </div>
+          </section>
 
-      <Card className="bg-card/50 backdrop-blur-sm border-muted">
-        <CardContent className="pt-6">
-          <h1 className="text-5xl font-bold my-4 leading-tight">Bun + React</h1>
-          <p>
-            Edit{" "}
-            <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">src/App.tsx</code> and
-            save to test HMR
-          </p>
-          <APITester />
-        </CardContent>
-      </Card>
+          <section className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-4">UI Registry</h2>
+            <div className="flex flex-col gap-4">
+              <Button>Click me</Button>
+            </div>
+          </section>
+
+          <section className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-4">Proposed UI</h2>
+            <div className="flex flex-col gap-4">
+              <NewButton>Click me</NewButton>
+            </div>
+          </section>
+        </div>
+      </div>
     </div>
   );
 }
