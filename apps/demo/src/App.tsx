@@ -12,17 +12,17 @@ const componentConfigs = {
   button: {
     variant: {
       label: "Variant",
-      options: ["default", "destructive", "outline", "secondary", "ghost", "link", "primary"],
+      options: ["default", "destructive", "outline", "secondary", "ghost", "link", "solid", "unstyled"],
     },
     size: {
       label: "Size",
-      options: ["sm", "default", "lg", "icon"],
+      options: ["xs", "sm", "default", "lg", "icon"],
     },
   },
   input: {
     variant: {
       label: "Variant",
-      options: ["default", "error"],
+      options: ["default", "outline", "filled", "flushed", "unstyled"],
     },
     size: {
       label: "Size",
@@ -32,7 +32,7 @@ const componentConfigs = {
   select: {
     variant: {
       label: "Variant",
-      options: ["default", "error"],
+      options: ["default", "outline", "filled", "flushed", "unstyled"],
     },
     size: {
       label: "Size",
@@ -40,6 +40,130 @@ const componentConfigs = {
     },
   },
 } as const;
+
+// Variant and size mappings for different libraries
+const mappers = {
+  redpanda: {
+    button: {
+      variant: (variant: string) => {
+        const map: Record<string, string> = {
+          default: "solid",
+          destructive: "solid", // closest equivalent
+          outline: "outline",
+          secondary: "outline", // closest equivalent
+          ghost: "ghost",
+          link: "link",
+          solid: "solid",
+          unstyled: "unstyled",
+        };
+        return map[variant] || "solid";
+      },
+      size: (size: string) => {
+        const map: Record<string, string> = {
+          xs: "xs",
+          sm: "sm", 
+          default: "md",
+          lg: "lg",
+          icon: "sm", // fallback for icon
+        };
+        return map[size] || "md";
+      },
+    },
+    input: {
+      variant: (variant: string) => {
+        const map: Record<string, string> = {
+          default: "outline",
+          outline: "outline",
+          filled: "filled",
+          flushed: "flushed",
+          unstyled: "unstyled",
+        };
+        return map[variant] || "outline";
+      },
+      size: (size: string) => {
+        const map: Record<string, string> = {
+          sm: "sm",
+          default: "md", 
+          lg: "lg",
+        };
+        return map[size] || "md";
+      },
+    },
+    select: {
+      variant: (variant: string) => {
+        const map: Record<string, string> = {
+          default: "outline",
+          outline: "outline",
+          filled: "filled",
+          flushed: "flushed",
+          unstyled: "unstyled",
+        };
+        return map[variant] || "outline";
+      },
+      size: (size: string) => {
+        const map: Record<string, string> = {
+          sm: "sm",
+          default: "md",
+          lg: "lg", 
+        };
+        return map[size] || "md";
+      },
+    },
+  },
+  // Registry and Proposed use the same variant/size names as our unified system
+  registry: {
+    button: {
+      variant: (variant: string) => {
+        const map: Record<string, string> = {
+          default: "default",
+          destructive: "destructive",
+          outline: "outline",
+          secondary: "secondary",
+          ghost: "ghost",
+          link: "link",
+          solid: "default", // map to closest equivalent
+          unstyled: "ghost", // map to closest equivalent
+        };
+        return map[variant] || "default";
+      },
+      size: (size: string) => size === "default" ? undefined : size,
+    },
+    input: {
+      variant: (variant: string) => variant, // Registry input doesn't have strong variant support
+      size: (size: string) => size,
+    },
+    select: {
+      variant: (variant: string) => variant, // Registry select doesn't have strong variant support
+      size: (size: string) => size === "default" ? undefined : size,
+    },
+  },
+  proposed: {
+    button: {
+      variant: (variant: string) => {
+        const map: Record<string, string> = {
+          default: "default",
+          destructive: "destructive",
+          outline: "outline",
+          secondary: "secondary",
+          ghost: "ghost",
+          link: "link",
+          solid: "default", // map to closest equivalent
+          unstyled: "ghost", // map to closest equivalent
+        };
+        return map[variant] || "default";
+      },
+      size: (size: string) => size === "default" ? undefined : size,
+    },
+    input: {
+      variant: (variant: string) => variant, // Proposed input doesn't have strong variant support
+      size: (size: string) => size,
+    },
+    select: {
+      variant: (variant: string) => variant, // Proposed select doesn't have strong variant support
+      size: (size: string) => size,
+    },
+  },
+};
 
 // Configuration Controls Component
 function ConfigurationControls({
@@ -140,19 +264,25 @@ function App() {
             />
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <RPButton variant={buttonConfig.variant} size={buttonConfig.size}>
+            <RPButton 
+              variant={mappers.redpanda.button.variant(buttonConfig.variant) as "ghost" | "outline" | "solid" | "link" | "unstyled"}
+              size={mappers.redpanda.button.size(buttonConfig.size) as "xs" | "sm" | "md" | "lg"}
+            >
               Click me
             </RPButton>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <Button variant={buttonConfig.variant as any} size={buttonConfig.size as any}>
+            <Button 
+              variant={mappers.registry.button.variant(buttonConfig.variant) as any} 
+              size={mappers.registry.button.size(buttonConfig.size) as any}
+            >
               Click me
             </Button>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
             <NewButton
-              variant={buttonConfig.variant as any}
-              size={buttonConfig.size as any}
+              variant={mappers.proposed.button.variant(buttonConfig.variant) as any}
+              size={mappers.proposed.button.size(buttonConfig.size) as any}
               start={<Search />}
               end={<ChevronDown />}
             >
@@ -170,11 +300,19 @@ function App() {
             />
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <RPSelect options={options} placeholder={placeholder} size={selectConfig.size} />
+            <RPSelect 
+              options={options} 
+              placeholder={placeholder} 
+              variant={mappers.redpanda.select.variant(selectConfig.variant) as "outline" | "filled" | "flushed" | "unstyled"}
+              size={mappers.redpanda.select.size(selectConfig.size) as "sm" | "md" | "lg"}
+            />
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
             <Select>
-              <SelectTrigger className="w-full" size={selectConfig.size as any}>
+              <SelectTrigger 
+                className="w-full" 
+                size={mappers.registry.select.size(selectConfig.size) as any}
+              >
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
               <SelectContent>
@@ -202,7 +340,11 @@ function App() {
             />
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <RPInput placeholder="Type something..." size={inputConfig.size} />
+            <RPInput 
+              placeholder="Type something..." 
+              variant={mappers.redpanda.input.variant(inputConfig.variant) as "outline" | "filled" | "flushed" | "unstyled"}
+              size={mappers.redpanda.input.size(inputConfig.size) as "sm" | "md" | "lg"}
+            />
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
             <Input
