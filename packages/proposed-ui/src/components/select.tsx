@@ -1,11 +1,11 @@
 "use client";
 
+import { type SlotProps, useSlots } from "@/lib/slot-utils";
+import { cn } from "@/lib/utils";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { Select as SelectPrimitive } from "radix-ui";
 import type { ComponentProps } from "react";
 import * as React from "react";
-
-import { cn } from "@/lib/utils";
 
 function SelectRoot({ ...props }: ComponentProps<typeof SelectPrimitive.Root>) {
   return <SelectPrimitive.Root data-slot="select" {...props} />;
@@ -148,12 +148,23 @@ export type SelectProps = ComponentProps<typeof SelectPrimitive.Root> & {
   options: Record<string, string>[];
   value?: string;
   placeholder?: string;
-};
+} & Omit<SlotProps, "end">;
 
-const Select = ({ placeholder, value, options, ...props }: SelectProps) => {
+const Select = ({ placeholder, value, options, start, loading, ...props }: SelectProps) => {
+  const { paddingClass, startPositionClass } = useSlots({
+    start,
+    end: undefined,
+    loading,
+    size: "default", // Input only has one size
+  });
   return (
     <SelectRoot {...props}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className={cn("w-[180px] relative", paddingClass)}>
+        {start && (
+          <span className={startPositionClass} data-slot="start">
+            {start}
+          </span>
+        )}
         <SelectValue placeholder={placeholder}>{value}</SelectValue>
       </SelectTrigger>
       <SelectContent>

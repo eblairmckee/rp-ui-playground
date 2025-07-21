@@ -1,12 +1,12 @@
+import { type SlotProps, useSlots } from "@/lib/slot-utils";
+import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Slot as SlotPrimitive } from "radix-ui";
-import type { ComponentProps, ReactNode } from "react";
+import type { ComponentProps } from "react";
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
-
 const buttonVariants = cva(
-  "flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-rp-ring focus-visible:ring-rp-ring/50 focus-visible:ring-[3px] aria-invalid:ring-rp-destructive/20 dark:aria-invalid:ring-rp-destructive/40 aria-invalid:border-rp-destructive",
+  "flex justify-center text-center items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-rp-ring focus-visible:ring-rp-ring/50 focus-visible:ring-[3px] aria-invalid:ring-rp-destructive/20 dark:aria-invalid:ring-rp-destructive/40 aria-invalid:border-rp-destructive",
   {
     variants: {
       variant: {
@@ -20,9 +20,9 @@ const buttonVariants = cva(
         link: "text-rp-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+        default: "h-9 py-2",
+        sm: "h-8 rounded-md gap-1.5",
+        lg: "h-10 rounded-md",
         icon: "size-9",
       },
     },
@@ -36,12 +36,7 @@ const buttonVariants = cva(
 type ButtonProps = ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
-  } & {
-    start?: ReactNode;
-    end?: ReactNode;
-    loading?: boolean;
-    renderLoading?: (loading: boolean) => ReactNode;
-  };
+  } & SlotProps;
 
 function Button({
   className,
@@ -56,34 +51,27 @@ function Button({
   ...props
 }: ButtonProps) {
   const Comp = asChild ? SlotPrimitive.Slot : "button";
-  const hasStart = Boolean(start);
-  const hasEnd = Boolean(end || loading);
-
-  // Calculate padding adjustments based on presence of start/end elements
-  const paddingClass = cn(
-    hasStart && "pl-3", // Add extra left padding when start element is present
-    hasEnd && "pr-3", // Add extra right padding when end element is present
-  );
+  const { paddingClass, startPositionClass, endPositionClass } = useSlots({
+    start,
+    end,
+    loading,
+    size,
+  });
 
   return (
     <Comp
       data-slot="button"
-      className={cn(
-        buttonVariants({ variant, size }),
-        "relative", // Make button itself the positioning context
-        paddingClass,
-        className,
-      )}
+      className={cn(buttonVariants({ variant, size }), paddingClass, "relative", className)}
       {...props}
     >
       {start && (
-        <span className="absolute left-1.5 top-1/2 -translate-y-1/2 z-10 pointer-events-none" data-slot="start">
+        <span className={startPositionClass} data-slot="start">
           {start}
         </span>
       )}
       {children}
       {(end || loading) && (
-        <span className="absolute right-1.5 top-1/2 -translate-y-1/2 z-10 pointer-events-none" data-slot="end">
+        <span className={endPositionClass} data-slot="end">
           {loading ? (renderLoading?.(loading) ?? loading) : end}
         </span>
       )}

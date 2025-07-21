@@ -1,6 +1,81 @@
 import { Button as RPButton, Input as RPInput, Select as RPSelect } from "@redpanda-data/ui";
+import { ChevronDown, Search } from "lucide-react";
+import { Button as NewButton, Input as NewInput, Select as NewSelect } from "proposed-ui";
+import { useState } from "react";
 import { Button, Input, Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "ui-registry";
-import { Button as NewButton, Input as NewInput, Select as NewSelect } from "../../../packages/proposed-ui/dist";
+
+// Component configuration types
+type ComponentType = "button" | "input" | "select";
+
+// Define all possible variants and sizes across all libraries
+const componentConfigs = {
+  button: {
+    variant: {
+      label: "Variant",
+      options: ["default", "destructive", "outline", "secondary", "ghost", "link", "primary"],
+    },
+    size: {
+      label: "Size",
+      options: ["sm", "default", "lg", "icon"],
+    },
+  },
+  input: {
+    variant: {
+      label: "Variant",
+      options: ["default", "error"],
+    },
+    size: {
+      label: "Size",
+      options: ["sm", "default", "lg"],
+    },
+  },
+  select: {
+    variant: {
+      label: "Variant",
+      options: ["default", "error"],
+    },
+    size: {
+      label: "Size",
+      options: ["sm", "default", "lg"],
+    },
+  },
+} as const;
+
+// Configuration Controls Component
+function ConfigurationControls({
+  componentType,
+  config,
+  onConfigChange,
+}: {
+  componentType: ComponentType;
+  config: { variant: string; size: string };
+  onConfigChange: (property: "variant" | "size", value: string) => void;
+}) {
+  const componentOptions = componentConfigs[componentType];
+
+  return (
+    <div className="flex gap-2">
+      <NewSelect
+        value={config.variant}
+        defaultValue="default"
+        onValueChange={(value) => onConfigChange("variant", value)}
+        options={componentOptions.variant.options.map((opt) => ({
+          label: opt,
+          value: opt,
+        }))}
+      />
+      <NewSelect
+        value={config.size}
+        defaultValue="default"
+        onValueChange={(value) => onConfigChange("size", value)}
+        options={componentOptions.size.options.map((opt) => ({
+          label: opt,
+          value: opt,
+        }))}
+      />
+    </div>
+  );
+}
 
 const options = [
   {
@@ -28,38 +103,78 @@ const options = [
 const placeholder = "Select a color...";
 
 function App() {
+  // State for component configurations
+  const [buttonConfig, setButtonConfig] = useState({ variant: "default", size: "default" });
+  const [inputConfig, setInputConfig] = useState({ variant: "default", size: "default" });
+  const [selectConfig, setSelectConfig] = useState({ variant: "default", size: "default" });
+
+  const updateConfig = (componentType: ComponentType, property: "variant" | "size", value: string) => {
+    if (componentType === "button") {
+      setButtonConfig((prev) => ({ ...prev, [property]: value }));
+    } else if (componentType === "input") {
+      setInputConfig((prev) => ({ ...prev, [property]: value }));
+    } else if (componentType === "select") {
+      setSelectConfig((prev) => ({ ...prev, [property]: value }));
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">UI Libraries Comparison</h1>
-        
+
         <div className="grid grid-cols-4 gap-4 items-start">
           {/* Header row */}
-          <div className="font-semibold text-lg">Component</div>
-          <div className="font-semibold text-lg text-center bg-white p-4 rounded-lg shadow-sm">Redpanda UI</div>
-          <div className="font-semibold text-lg text-center bg-white p-4 rounded-lg shadow-sm">UI Registry</div>
-          <div className="font-semibold text-lg text-center bg-white p-4 rounded-lg shadow-sm">Proposed UI</div>
-          
+          <div className="font-semibold text-lg" />
+          <div className="font-semibold text-lg text-center">Redpanda UI</div>
+          <div className="font-semibold text-lg text-center">UI Registry</div>
+          <div className="font-semibold text-lg text-center">Proposed UI</div>
+
           {/* Button row */}
-          <div className="font-medium text-gray-700 py-4">Button</div>
-          <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <RPButton>Click me</RPButton>
+          <div className="py-4">
+            <div className="font-medium text-gray-700 mb-2">Button</div>
+            <ConfigurationControls
+              componentType="button"
+              config={buttonConfig}
+              onConfigChange={(property, value) => updateConfig("button", property, value)}
+            />
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <Button>Click me</Button>
+            <RPButton variant={buttonConfig.variant} size={buttonConfig.size}>
+              Click me
+            </RPButton>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <NewButton start="s" end="e">Click me</NewButton>
+            <Button variant={buttonConfig.variant as any} size={buttonConfig.size as any}>
+              Click me
+            </Button>
           </div>
-          
+          <div className="bg-white p-4 rounded-lg shadow-sm border">
+            <NewButton
+              variant={buttonConfig.variant as any}
+              size={buttonConfig.size as any}
+              start={<Search />}
+              end={<ChevronDown />}
+            >
+              Click me
+            </NewButton>
+          </div>
+
           {/* Select row */}
-          <div className="font-medium text-gray-700 py-4">Select</div>
+          <div className="py-4">
+            <div className="font-medium text-gray-700 mb-2">Select</div>
+            <ConfigurationControls
+              componentType="select"
+              config={selectConfig}
+              onConfigChange={(property, value) => updateConfig("select", property, value)}
+            />
+          </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <RPSelect options={options} placeholder={placeholder} />
+            <RPSelect options={options} placeholder={placeholder} size={selectConfig.size} />
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
             <Select>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full" size={selectConfig.size as any}>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
               <SelectContent>
@@ -74,19 +189,34 @@ function App() {
             </Select>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <NewSelect options={options} placeholder={placeholder} />
+            <NewSelect options={options} placeholder={placeholder} start={<Search />} />
           </div>
-          
+
           {/* Input row */}
-          <div className="font-medium text-gray-700 py-4">Input</div>
-          <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <RPInput placeholder="Type something..." />
+          <div className="py-4">
+            <div className="font-medium text-gray-700 mb-2">Input</div>
+            <ConfigurationControls
+              componentType="input"
+              config={inputConfig}
+              onConfigChange={(property, value) => updateConfig("input", property, value)}
+            />
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <Input placeholder="Type something..." />
+            <RPInput placeholder="Type something..." size={inputConfig.size} />
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <NewInput placeholder="Type something..." />
+            <Input
+              placeholder="Type something..."
+              className={inputConfig.size === "sm" ? "h-8 text-sm" : inputConfig.size === "lg" ? "h-10 text-base" : ""}
+            />
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow-sm border">
+            <NewInput
+              start={<Search size={15} />}
+              loading
+              placeholder="Type something..."
+              className={inputConfig.size === "sm" ? "h-8 text-sm" : inputConfig.size === "lg" ? "h-10 text-base" : ""}
+            />
           </div>
         </div>
       </div>
