@@ -8,7 +8,8 @@
   "scripts": {
     "build": "tsup && bun run build:css",
     "build:css": "postcss src/styles/globals.css -o dist/globals.css",
-    "dev": "tsup --watch",
+    "dev": "tsup --watch & bun run dev:css",
+    "dev:css": "nodemon --watch src/styles --ext css --exec \"bun run build:css\"",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "type-check": "tsc --noEmit"
   },
@@ -31,6 +32,7 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "eslint": "^9",
+    "nodemon": "^3.0.0",
     "postcss": "^8.4.47",
     "postcss-cli": "^11.0.0",
     "tailwindcss": "^4.0.0",

@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { Slot as SlotPrimitive } from "radix-ui";
+import type { ComponentProps } from "react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -9,16 +10,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-rp-primary text-rp-primary-foreground shadow-xs hover:bg-rp-primary/90",
+        default: "bg-rp-primary text-rp-primary-foreground shadow-xs hover:bg-rp-primary/90",
         destructive:
           "bg-rp-destructive text-white shadow-xs hover:bg-rp-destructive/90 focus-visible:ring-rp-destructive/20 dark:focus-visible:ring-rp-destructive/40 dark:bg-rp-destructive/60",
         outline:
           "border bg-rp-background shadow-xs hover:bg-rp-accent hover:text-rp-accent-foreground dark:bg-rp-input/30 dark:border-rp-input dark:hover:bg-rp-input/50",
-        secondary:
-          "bg-rp-secondary text-rp-secondary-foreground shadow-xs hover:bg-rp-secondary/80",
-        ghost:
-          "hover:bg-rp-accent hover:text-rp-accent-foreground dark:hover:bg-rp-accent/50",
+        secondary: "bg-rp-secondary text-rp-secondary-foreground shadow-xs hover:bg-rp-secondary/80",
+        ghost: "hover:bg-rp-accent hover:text-rp-accent-foreground dark:hover:bg-rp-accent/50",
         link: "text-rp-primary underline-offset-4 hover:underline",
       },
       size: {
@@ -32,7 +30,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 function Button({
@@ -41,19 +39,13 @@ function Button({
   size,
   asChild = false,
   ...props
-}: React.ComponentProps<"button"> &
+}: ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
   }) {
   const Comp = asChild ? SlotPrimitive.Slot : "button";
 
-  return (
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  );
+  return <Comp data-slot="button" className={cn(buttonVariants({ variant, size, className }))} {...props} />;
 }
 
 export { Button, buttonVariants };
