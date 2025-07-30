@@ -21,10 +21,6 @@ const Group = ({
 
       const isFirst = index === 0;
       const isLast = index === React.Children.count(children) - 1;
-      console.log({
-        isFirst,
-        isLast,
-      });
 
       return React.cloneElement(child as React.ReactElement, {
         className: cn(
@@ -36,9 +32,9 @@ const Group = ({
     });
 
   return (
-    <div className={cn("flex items-end gap-1.5", className)}>
+    <div className={cn("flex items-end gap-1.5 w-full", className)}>
       {prefix}
-      <div className={cn("flex items-center", !attached && "gap-1.5")}>
+      <div className={cn("flex items-center w-full", !attached && "gap-1.5")}>
         {content}
       </div>
       {suffix}

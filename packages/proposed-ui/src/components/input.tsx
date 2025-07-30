@@ -64,8 +64,13 @@ function Input({
 }: InputProps) {
   const startRef = React.useRef<HTMLSpanElement>(null);
   const endRef = React.useRef<HTMLSpanElement>(null);
-  const startWidth = startRef.current?.offsetWidth;
-  const endWidth = endRef.current?.offsetWidth;
+  const [startWidth, setStartWidth] = React.useState<number | undefined>();
+  const [endWidth, setEndWidth] = React.useState<number | undefined>();
+
+  React.useEffect(() => {
+    setStartWidth(startRef.current?.offsetWidth);
+    setEndWidth(endRef.current?.offsetWidth);
+  }, [startRef.current, endRef.current]);
 
   const {
     paddingClass,
@@ -86,33 +91,35 @@ function Input({
   });
 
   const inputElement = (
-    <div className={cn("relative flex items-center", inputWrapperClassName)}>
+    <div className={cn("flex items-center w-full", inputWrapperClassName)}>
       {prefix && (
         <GroupContextProvider value={{ isPrefix: true }}>
           {prefix}
         </GroupContextProvider>
       )}
-      <input
-        type={type}
-        data-slot="input"
-        className={cn(
-          inputVariants({ hasPrefix, hasSuffix }),
-          paddingClass,
-          className
+      <div className="relative flex items-center w-full">
+        <input
+          type={type}
+          data-slot="input"
+          className={cn(
+            inputVariants({ hasPrefix, hasSuffix }),
+            paddingClass,
+            className
+          )}
+          style={paddingStyle}
+          {...props}
+        />
+        {start && (
+          <span className={startPositionClass} data-slot="start" ref={startRef}>
+            {start}
+          </span>
         )}
-        style={paddingStyle}
-        {...props}
-      />
-      {start && (
-        <span className={startPositionClass} data-slot="start" ref={startRef}>
-          {start}
-        </span>
-      )}
-      {(end || loading) && (
-        <span className={endPositionClass} data-slot="end" ref={endRef}>
-          {loading ? renderLoading?.(loading) ?? <Loader size={15} /> : end}
-        </span>
-      )}
+        {(end || loading) && (
+          <span className={endPositionClass} data-slot="end" ref={endRef}>
+            {loading ? renderLoading?.(loading) ?? <Loader size={15} /> : end}
+          </span>
+        )}
+      </div>
       {suffix && (
         <GroupContextProvider value={{ isSuffix: true }}>
           {suffix}
@@ -122,7 +129,7 @@ function Input({
   );
 
   return label ? (
-    <div className={cn("flex flex-col gap-1.5", labelWrapperClassName)}>
+    <div className={cn("flex flex-col gap-1.5 w-full", labelWrapperClassName)}>
       {<Label className={labelClassName}>{label}</Label>}
       {inputElement}
     </div>

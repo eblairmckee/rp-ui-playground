@@ -283,8 +283,8 @@ export const slotPositionVariants = cva(
       // Start positioning (absolute positioned)
       { size: "sm", position: "start", class: "left-2" },
       { size: "sm", position: "end", class: "right-2" },
-      { size: "default", position: "start", class: "left-3" },
-      { size: "default", position: "end", class: "right-3" },
+      { size: "default", position: "start", class: "left-2" },
+      { size: "default", position: "end", class: "right-2" },
       { size: "lg", position: "start", class: "left-3" },
       { size: "lg", position: "end", class: "right-3" },
       { size: "icon", position: "start", class: "left-2" },
@@ -292,13 +292,13 @@ export const slotPositionVariants = cva(
 
       // Prefix positioning (flows with content, left side)
       { size: "sm", position: "prefix", class: "left-2" },
-      { size: "default", position: "prefix", class: "left-3" },
+      { size: "default", position: "prefix", class: "left-2" },
       { size: "lg", position: "prefix", class: "left-3" },
       { size: "icon", position: "prefix", class: "left-2" },
 
       // Suffix positioning (flows with content, right side)
       { size: "sm", position: "suffix", class: "right-2" },
-      { size: "default", position: "suffix", class: "right-3" },
+      { size: "default", position: "suffix", class: "right-2" },
       { size: "lg", position: "suffix", class: "right-3" },
       { size: "icon", position: "suffix", class: "right-2" },
     ],
@@ -364,7 +364,7 @@ export function useSlots({
 
     // Handle left padding (start or prefix take priority over static padding)
     if (hasDynamicStart) {
-      style.paddingLeft = `${startWidth + 8}px`;
+      style.paddingLeft = `${startWidth + 16}px`;
     } else if (hasPrefix) {
       // No left padding for prefix
     } else if (!basePaddingClass) {
@@ -375,7 +375,7 @@ export function useSlots({
 
     // Handle right padding (end or suffix take priority over static padding)
     if (hasDynamicEnd) {
-      style.paddingRight = `${endWidth + 8}px`;
+      style.paddingRight = `${endWidth + 16}px`;
     } else if (hasSuffix) {
       // No right padding for suffix
     } else if (!basePaddingClass) {

@@ -28,6 +28,7 @@
         "react-hook-form": "7.48.2",
         "react-router-dom": "^6.26.0",
         "ui-registry": "workspace:*",
+        "yup": "^1.6.1",
       },
       "devDependencies": {
         "@tailwindcss/vite": "^4.1.11",
