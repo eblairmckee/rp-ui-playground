@@ -19,3 +19,11 @@ bun start
 ```
 
 This project was created using `bun init` in bun v1.2.18. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+
+## proposed-ui components
+
+### via shadcn registry
+
+```bash
+npx shadcn@latest add https://raw.githubusercontent.com/eblairmckee/rp-ui-playground/main/packages/proposed-ui/public/r/button.json
+```
