@@ -27,3 +27,9 @@ This project was created using `bun init` in bun v1.2.18. [Bun](https://bun.sh) 
 ```bash
 npx shadcn@latest add https://raw.githubusercontent.com/eblairmckee/rp-ui-playground/main/packages/proposed-ui/public/r/button.json
 ```
+
+### via npm
+
+```
+bun add @blairwitch/proposed-ui
+```

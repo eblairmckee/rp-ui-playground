@@ -1,0 +1,38 @@
+# Source files
+src/
+registry.json
+
+# Build artifacts
+tsconfig*.json
+tsup.config.ts
+postcss.config.js
+
+# Development files
+.git
+.gitignore
+node_modules/
+*.log
+
+# Registry files (users should use shadcn CLI)
+public/
+
+# Development configs
+components.json
+
+# Lock files
+*.lock
+pnpm-lock.yaml
+yarn.lock
+
+# Environment files
+.env*
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
