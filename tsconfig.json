@@ -2,6 +2,13 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "allowJs": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitOverride": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["bun-types"],
 
     // Bundler mode
     "moduleResolution": "bundler",

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "group-context",
+  "type": "registry:lib",
+  "title": "Group Context",
+  "description": "React context for group component state management",
+  "dependencies": [
+    "react"
+  ],
+  "files": [
+    {
+      "path": "src/lib/group-context.ts",
+      "content": "import { createContext, useContext } from \"react\";\n\nexport type GroupContextValue = {\n  isSuffix?: boolean;\n  isPrefix?: boolean;\n};\n\nconst groupContext = createContext<GroupContextValue>({});\nexport const GroupContextProvider = groupContext.Provider;\nexport const useGroupContext = () => {\n  const context = useContext(groupContext);\n  if (!context) {\n    throw new Error(\n      \"useGroupContext must be used within a GroupContextProvider\"\n    );\n  }\n  return context;\n};\n",
+      "type": "registry:lib"
+    }
+  ]
+}

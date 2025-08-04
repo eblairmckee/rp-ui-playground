@@ -6,9 +6,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsup && bun run build:css",
+    "build": "tsup && bun run build:css && bun run registry:build",
     "build:css": "postcss src/styles/globals.css -o dist/globals.css",
-    "dev": "tsup --watch",
+    "registry:build": "shadcn build",
+    "dev": "tsup --watch & bun run dev:css",
+    "dev:css": "nodemon --watch src/styles --ext css --exec \"bun run build:css\"",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "type-check": "tsc --noEmit"
   },
@@ -23,13 +25,17 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.525.0",
     "radix-ui": "^1.4.2",
+    "shadcn": "^2.9.3-canary.0",
     "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.11",
     "tw-animate-css": "^1.3.5"
   },
   "devDependencies": {
+    "@shadcn/ui": "^0.0.4",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "eslint": "^9",
+    "nodemon": "^3.0.0",
     "tsup": "^8.0.0",
     "typescript": "^5"
   }

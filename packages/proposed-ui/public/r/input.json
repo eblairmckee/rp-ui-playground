@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "type": "registry:component",
+  "title": "Input",
+  "description": "A flexible input component with slot-based composition",
+  "dependencies": [
+    "@radix-ui/react-slot",
+    "class-variance-authority",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/input.tsx",
+      "content": "import { GroupContextProvider } from \"@/lib/group-context\";\nimport { type SlotProps, useSlots } from \"@/lib/slot-utils\";\nimport { cn } from \"@/lib/utils\";\nimport { cva } from \"class-variance-authority\";\nimport { Loader } from \"lucide-react\";\nimport type { ComponentProps } from \"react\";\nimport * as React from \"react\";\nimport { Label } from \"./label\";\n\nconst inputVariants = cva(\n  \"file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 border bg-transparent py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive\",\n  {\n    variants: {\n      hasPrefix: {\n        true: \"rounded-r-md rounded-l-none\",\n        false: \"rounded-l-md\",\n      },\n      hasSuffix: {\n        true: \"rounded-l-md rounded-r-none\",\n        false: \"rounded-r-md\",\n      },\n    },\n    compoundVariants: [\n      {\n        hasPrefix: false,\n        hasSuffix: false,\n        class: \"rounded-md\",\n      },\n      {\n        hasPrefix: true,\n        hasSuffix: true,\n        class: \"rounded-none\",\n      },\n    ],\n    defaultVariants: {\n      hasPrefix: false,\n      hasSuffix: false,\n    },\n  }\n);\n\ntype InputProps = ComponentProps<\"input\"> &\n  SlotProps & {\n    label?: React.ReactNode;\n    labelClassName?: string;\n    labelWrapperClassName?: string;\n    inputWrapperClassName?: string;\n  };\n\nfunction Input({\n  className,\n  type,\n  start,\n  end,\n  loading,\n  renderLoading,\n  prefix,\n  suffix,\n  label,\n  labelClassName,\n  labelWrapperClassName,\n  inputWrapperClassName,\n  ...props\n}: InputProps) {\n  const startRef = React.useRef<HTMLSpanElement>(null);\n  const endRef = React.useRef<HTMLSpanElement>(null);\n  const [startWidth, setStartWidth] = React.useState<number | undefined>();\n  const [endWidth, setEndWidth] = React.useState<number | undefined>();\n\n  React.useEffect(() => {\n    setStartWidth(startRef.current?.offsetWidth);\n    setEndWidth(endRef.current?.offsetWidth);\n  }, [startRef.current, endRef.current]);\n\n  const {\n    paddingClass,\n    paddingStyle,\n    startPositionClass,\n    endPositionClass,\n    hasPrefix,\n    hasSuffix,\n  } = useSlots({\n    start,\n    end,\n    loading,\n    size: \"default\", // Input only has one size,\n    prefix,\n    suffix,\n    startWidth,\n    endWidth,\n  });\n\n  const inputElement = (\n    <div className={cn(\"flex items-center w-full\", inputWrapperClassName)}>\n      {prefix && (\n        <GroupContextProvider value={{ isPrefix: true }}>\n          {prefix}\n        </GroupContextProvider>\n      )}\n      <div className=\"relative flex items-center w-full\">\n        <input\n          type={type}\n          data-slot=\"input\"\n          className={cn(\n            inputVariants({ hasPrefix, hasSuffix }),\n            paddingClass,\n            className\n          )}\n          style={paddingStyle}\n          {...props}\n        />\n        {start && (\n          <span className={startPositionClass} data-slot=\"start\" ref={startRef}>\n            {start}\n          </span>\n        )}\n        {(end || loading) && (\n          <span className={endPositionClass} data-slot=\"end\" ref={endRef}>\n            {loading ? renderLoading?.(loading) ?? <Loader size={15} /> : end}\n          </span>\n        )}\n      </div>\n      {suffix && (\n        <GroupContextProvider value={{ isSuffix: true }}>\n          {suffix}\n        </GroupContextProvider>\n      )}\n    </div>\n  );\n\n  return label ? (\n    <div className={cn(\"flex flex-col gap-1.5 w-full\", labelWrapperClassName)}>\n      {<Label className={labelClassName}>{label}</Label>}\n      {inputElement}\n    </div>\n  ) : (\n    inputElement\n  );\n}\n\nexport { Input };\n",
+      "type": "registry:component"
+    }
+  ]
+}
