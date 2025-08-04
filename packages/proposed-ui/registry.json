@@ -14,15 +14,8 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-
-        "class-variance-authority",
-        "clsx",
-        "tailwind-merge"
-      ],
-      "registryDependencies": [
-        "utils"
-      ]
+      "dependencies": ["class-variance-authority", "clsx", "tailwind-merge"],
+      "registryDependencies": ["utils"]
     },
     {
       "name": "input",
@@ -35,15 +28,8 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-
-        "class-variance-authority",
-        "clsx",
-        "tailwind-merge"
-      ],
-      "registryDependencies": [
-        "utils"
-      ]
+      "dependencies": ["class-variance-authority", "clsx", "tailwind-merge"],
+      "registryDependencies": ["utils"]
     },
     {
       "name": "label",
@@ -56,15 +42,8 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-
-        "class-variance-authority",
-        "clsx",
-        "tailwind-merge"
-      ],
-      "registryDependencies": [
-        "utils"
-      ]
+      "dependencies": ["class-variance-authority", "clsx", "tailwind-merge"],
+      "registryDependencies": ["utils"]
     },
     {
       "name": "select",
@@ -77,15 +56,8 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "class-variance-authority",
-        "clsx",
-        "lucide-react",
-        "tailwind-merge"
-      ],
-      "registryDependencies": [
-        "utils"
-      ]
+      "dependencies": ["class-variance-authority", "clsx", "lucide-react", "tailwind-merge"],
+      "registryDependencies": ["utils"]
     },
     {
       "name": "form",
@@ -98,15 +70,8 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-
-        "class-variance-authority",
-        "clsx",
-        "tailwind-merge"
-      ],
-      "registryDependencies": [
-        "utils"
-      ]
+      "dependencies": ["class-variance-authority", "clsx", "tailwind-merge"],
+      "registryDependencies": ["utils"]
     },
     {
       "name": "group",
@@ -119,16 +84,8 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-
-        "class-variance-authority",
-        "clsx",
-        "tailwind-merge"
-      ],
-      "registryDependencies": [
-        "utils",
-        "group-context"
-      ]
+      "dependencies": ["class-variance-authority", "clsx", "tailwind-merge"],
+      "registryDependencies": ["utils", "group-context"]
     },
     {
       "name": "utils",
@@ -141,40 +98,7 @@
           "type": "registry:lib"
         }
       ],
-      "dependencies": [
-        "clsx",
-        "tailwind-merge"
-      ]
-    },
-    {
-      "name": "group-context",
-      "type": "registry:lib",
-      "title": "Group Context",
-      "description": "React context for group component state management",
-      "files": [
-        {
-          "path": "src/lib/group-context.ts",
-          "type": "registry:lib"
-        }
-      ],
-      "dependencies": [
-        "react"
-      ]
-    },
-    {
-      "name": "slot-utils",
-      "type": "registry:lib",
-      "title": "Slot Utils",
-      "description": "Advanced slot-based composition utilities",
-      "files": [
-        {
-          "path": "src/lib/slot-utils.ts",
-          "type": "registry:lib"
-        }
-      ],
-      "dependencies": [
-        "react"
-      ]
+      "dependencies": ["clsx", "tailwind-merge"]
     }
   ]
-} 
+}

@@ -9,9 +9,12 @@ import {
 import { CopyIcon, EyeIcon, SearchIcon, TrashIcon } from "lucide-react";
 import {
   Button as NewButton,
-  Group as NewGroup,
   Input as NewInput,
-  InputStart
+  InputStart as NewInputStart,
+  InputRoot as NewInputRoot,
+  Label as NewLabel,
+  InputEnd as NewInputEnd,
+  Group as NewGroup,
 } from "@blairwitch/proposed-ui";
 import { Button, Input, Label } from "ui-registry";
 
@@ -43,10 +46,7 @@ const GroupDemo = () => {
                 paddingLeft: 32,
               }}
             />
-            <SearchIcon
-              size={15}
-              className="absolute left-3 top-1/2 transform -translate-y-1/2"
-            />
+            <SearchIcon size={15} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
             <Button className="rounded-l-none">Submit</Button>
           </div>
         </div>
@@ -54,62 +54,46 @@ const GroupDemo = () => {
       <div className="flex flex-col gap-6 basis-1/3">
         <h2 className="text-2xl">Proposed</h2>
         <div className="flex flex-col gap-3">
-          <NewInput
-            placeholder="John Doe"
-            suffix={<NewButton>Submit</NewButton>}
-            label="User"
-          >
-            <InputStart>
-              <SearchIcon size={15} />
-            </InputStart>
-          </NewInput>
+          <NewLabel>
+            User
+            <NewGroup attached>
+              <NewInputRoot>
+                <NewInput placeholder="John Doe">
+                  <NewInputStart>
+                    <SearchIcon size={15} />
+                  </NewInputStart>
+                </NewInput>
+              </NewInputRoot>
+              <NewButton>Submit</NewButton>
+            </NewGroup>
+          </NewLabel>
         </div>
         <div className="flex flex-col gap-3">
-          <p className="text-sm text-gray-400 uppercase">
-            Input with Button in Group
-          </p>
-          <NewGroup attached>
-            <NewInput placeholder="John Doe" start={<SearchIcon size={15} />} />
-            <NewButton>Submit</NewButton>
-          </NewGroup>
-        </div>
-        <div className="flex flex-col gap-3">
-          <p className="text-sm text-gray-400 uppercase">
-            Input in a Group with a Button
-          </p>
-          <NewGroup
-            attached
-            suffix={
-              <NewButton size="icon">
-                <TrashIcon size={15} />
-              </NewButton>
-            }
-          >
-            <NewInput label="Key" />
-            <NewInput
-              label="Value"
-              type="password"
-              defaultValue="fdfsdfds"
-              end={
-                <NewButton
-                  className="cursor-pointer"
-                  variant="ghost"
-                  size="icon"
-                >
-                  <EyeIcon size={15} />
-                </NewButton>
-              }
-              suffix={
-                <NewButton
-                  variant="secondary"
-                  size="icon"
-                  className="cursor-pointer"
-                >
+          <div className="flex gap-1.5">
+            <NewLabel>
+              Key
+              <NewInputRoot>
+                <NewInput />
+              </NewInputRoot>
+            </NewLabel>
+            <NewLabel>
+              Value
+              <NewGroup attached>
+                <NewInputRoot>
+                  <NewInput type="password" defaultValue="fdfsdfds">
+                    <NewInputEnd>
+                      <NewButton variant="ghost" size="icon" className="cursor-pointer">
+                        <EyeIcon size={15} />
+                      </NewButton>
+                    </NewInputEnd>
+                  </NewInput>
+                </NewInputRoot>
+                <NewButton variant="secondary" size="icon" className="cursor-pointer">
                   <CopyIcon size={15} />
                 </NewButton>
-              }
-            />
-          </NewGroup>
+              </NewGroup>
+            </NewLabel>
+          </div>
         </div>
       </div>
     </div>
