@@ -11,7 +11,8 @@ import {
   Button as NewButton,
   Group as NewGroup,
   Input as NewInput,
-} from "proposed-ui";
+  InputStart
+} from "@blairwitch/proposed-ui";
 import { Button, Input, Label } from "ui-registry";
 
 const GroupDemo = () => {
@@ -55,10 +56,13 @@ const GroupDemo = () => {
         <div className="flex flex-col gap-3">
           <NewInput
             placeholder="John Doe"
-            start={<SearchIcon size={15} />}
             suffix={<NewButton>Submit</NewButton>}
             label="User"
-          />
+          >
+            <InputStart>
+              <SearchIcon size={15} />
+            </InputStart>
+          </NewInput>
         </div>
         <div className="flex flex-col gap-3">
           <p className="text-sm text-gray-400 uppercase">

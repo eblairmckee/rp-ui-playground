@@ -5,7 +5,6 @@
   "title": "Group",
   "description": "A group component for organizing related elements",
   "dependencies": [
-    "@radix-ui/react-slot",
     "class-variance-authority",
     "clsx",
     "tailwind-merge"

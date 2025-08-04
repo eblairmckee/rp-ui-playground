@@ -1,6 +1,6 @@
 import { Button as RPButton, Input as RPInput, Select as RPSelect } from "@redpanda-data/ui";
 import { ChevronDown, Search } from "lucide-react";
-import { Button as NewButton, Input as NewInput, Select as NewSelect } from "proposed-ui";
+import { Button as NewButton, Input as NewInput, Select as NewSelect } from "@blairwitch/proposed-ui";
 import { useState } from "react";
 import { Button, Input, Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "ui-registry";
 

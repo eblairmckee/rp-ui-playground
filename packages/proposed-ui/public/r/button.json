@@ -5,7 +5,6 @@
   "title": "Button",
   "description": "A versatile button component with slot-based composition",
   "dependencies": [
-    "@radix-ui/react-slot",
     "class-variance-authority",
     "clsx",
     "tailwind-merge"

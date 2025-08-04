@@ -15,7 +15,7 @@
         }
       ],
       "dependencies": [
-        "@radix-ui/react-slot",
+
         "class-variance-authority",
         "clsx",
         "tailwind-merge"
@@ -36,7 +36,7 @@
         }
       ],
       "dependencies": [
-        "@radix-ui/react-slot",
+
         "class-variance-authority",
         "clsx",
         "tailwind-merge"
@@ -57,7 +57,7 @@
         }
       ],
       "dependencies": [
-        "@radix-ui/react-slot",
+
         "class-variance-authority",
         "clsx",
         "tailwind-merge"
@@ -78,8 +78,6 @@
         }
       ],
       "dependencies": [
-        "@radix-ui/react-select",
-        "@radix-ui/react-slot",
         "class-variance-authority",
         "clsx",
         "lucide-react",
@@ -101,7 +99,7 @@
         }
       ],
       "dependencies": [
-        "@radix-ui/react-slot",
+
         "class-variance-authority",
         "clsx",
         "tailwind-merge"
@@ -122,7 +120,7 @@
         }
       ],
       "dependencies": [
-        "@radix-ui/react-slot",
+
         "class-variance-authority",
         "clsx",
         "tailwind-merge"
@@ -175,8 +173,7 @@
         }
       ],
       "dependencies": [
-        "react",
-        "@radix-ui/react-slot"
+        "react"
       ]
     }
   ]

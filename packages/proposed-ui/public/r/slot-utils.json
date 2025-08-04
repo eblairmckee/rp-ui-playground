@@ -5,8 +5,7 @@
   "title": "Slot Utils",
   "description": "Advanced slot-based composition utilities",
   "dependencies": [
-    "react",
-    "@radix-ui/react-slot"
+    "react"
   ],
   "files": [
     {
