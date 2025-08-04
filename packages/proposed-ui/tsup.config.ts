@@ -14,8 +14,6 @@ export default defineConfig({
   external: [
     "react", 
     "react-dom", 
-    "@radix-ui/react-select",
-    "@radix-ui/react-slot",
     "class-variance-authority",
     "clsx",
     "lucide-react",

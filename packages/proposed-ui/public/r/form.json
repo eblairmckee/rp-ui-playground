@@ -5,7 +5,6 @@
   "title": "Form",
   "description": "A form component with slot-based composition",
   "dependencies": [
-    "@radix-ui/react-slot",
     "class-variance-authority",
     "clsx",
     "tailwind-merge"

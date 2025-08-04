@@ -9,13 +9,13 @@
   ],
   "scripts": {
     "dev": "bun run dev:packages & bun run dev:demo",
-    "dev:packages": "bun --filter=\"proposed-ui\" --filter=\"ui-registry\" run dev",
+    "dev:packages": "bun --filter=\"@blairwitch/proposed-ui\" --filter=\"ui-registry\" run dev",
     "dev:demo": "cd apps/demo && bun run dev",
     "build": "cd apps/demo && bun run build",
     "start": "cd apps/demo && bun run start",
     "lint": "cd apps/demo && bun run lint",
     "clean": "rm -rf node_modules packages/*/node_modules packages/*/dist apps/*/node_modules",
-    "build:packages": "bun --filter=\"proposed-ui\" --filter=\"ui-registry\" run build"
+    "build:packages": "bun --filter=\"@blairwitch/proposed-ui\" --filter=\"ui-registry\" run build"
   },
   "dependencies": {},
   "devDependencies": {

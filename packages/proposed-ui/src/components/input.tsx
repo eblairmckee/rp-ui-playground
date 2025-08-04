@@ -60,6 +60,7 @@ function Input({
   labelClassName,
   labelWrapperClassName,
   inputWrapperClassName,
+  children,
   ...props
 }: InputProps) {
   const startRef = React.useRef<HTMLSpanElement>(null);
@@ -109,6 +110,7 @@ function Input({
           style={paddingStyle}
           {...props}
         />
+        {children}
         {start && (
           <span className={startPositionClass} data-slot="start" ref={startRef}>
             {start}
@@ -138,4 +140,21 @@ function Input({
   );
 }
 
-export { Input };
+const InputStart = ({ children, className }: { children: React.ReactNode, className?: string }) => {
+  return <span className={cn("absolute top-1/2 -translate-y-1/2 z-10 pointer-events-none left-2", className)}>{children}</span>;
+};
+
+export { Input, InputStart };
+
+
+
+{/* <Input start={<Search className="size-4" />} end={<X className="size-4" />} /> */}
+
+{/* <Input value="Hello">
+  <InputStart >
+    <Search className="size-4" />
+  </InputStart>
+  <InputEnd>
+    <X className="size-4" />
+  </InputEnd> */}
+// </Input>

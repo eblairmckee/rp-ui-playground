@@ -5,8 +5,6 @@
   "title": "Select",
   "description": "A select component with slot-based composition",
   "dependencies": [
-    "@radix-ui/react-select",
-    "@radix-ui/react-slot",
     "class-variance-authority",
     "clsx",
     "lucide-react",

@@ -1,10 +1,9 @@
 import { useGroupContext } from "@/lib/group-context";
+import { Slot as SlotPrimitive } from "radix-ui";
 import { type SlotProps, useSlots } from "@/lib/slot-utils";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Slot as SlotPrimitive } from "radix-ui";
 import type { ComponentProps } from "react";
-import * as React from "react";
 
 const buttonVariants = cva(
   "flex justify-center text-center items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-rp-ring focus-visible:ring-rp-ring/50 focus-visible:ring-[3px] aria-invalid:ring-rp-destructive/20 dark:aria-invalid:ring-rp-destructive/40 aria-invalid:border-rp-destructive",

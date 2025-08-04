@@ -27,7 +27,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsup && bun run build:css && bun run registry:build",
+    "build": "tsup && bun run registry:build && bun run build:css",
     "build:css": "postcss src/styles/globals.css -o dist/globals.css",
     "registry:build": "shadcn build",
     "dev": "tsup --watch & bun run dev:css",
@@ -40,8 +40,6 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@radix-ui/react-select": "^2.2.5",
-    "@radix-ui/react-slot": "^1.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.525.0",
