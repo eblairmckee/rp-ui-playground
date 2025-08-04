@@ -2,7 +2,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: ["src/index.ts"],
-  format: ["cjs", "esm"],
+  format: ["esm"],
   dts: true,
   splitting: false,
   minify: true,
@@ -11,7 +11,16 @@ export default defineConfig({
     moduleSideEffects: false,
   },
   sourcemap: true,
-  external: ["react", "react-dom", "next", "next/font"],
+  external: [
+    "react", 
+    "react-dom", 
+    "@radix-ui/react-select",
+    "@radix-ui/react-slot",
+    "class-variance-authority",
+    "clsx",
+    "lucide-react",
+    "tailwind-merge"
+  ],
   injectStyle: false,
   loader: {
     ".ttf": "file",
